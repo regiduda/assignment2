@@ -29,6 +29,11 @@ public class CarView extends JFrame {
     int gasAmount = 50;
     JLabel gasLabel = new JLabel("Amount of gas");
 
+    JPanel  brakePanel = new JPanel();
+    JSpinner brakeSpinner;
+    int brakeAmount = 50;
+    JLabel brakeLabel = new JLabel("Amount of brake");
+
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
     JButton leftButton = new JButton("← Turn left ←");
@@ -70,6 +75,17 @@ public class CarView extends JFrame {
 
         this.add(gasPanel);
 
+        brakeSpinner = new JSpinner(new SpinnerNumberModel(brakeAmount, 0, 100, 1));
+        brakeSpinner.addChangeListener(e -> {
+            brakeAmount = (int) ((JSpinner)e.getSource()).getValue();
+        });
+
+        brakePanel.setLayout(new BorderLayout());
+        brakePanel.add(brakeLabel, BorderLayout.PAGE_START);
+        brakePanel.add(brakeSpinner, BorderLayout.PAGE_END);
+
+        this.add(brakePanel);
+
         controlPanel.setLayout(new GridLayout(2,4));
 
         controlPanel.add(gasButton, 0);
@@ -98,10 +114,10 @@ public class CarView extends JFrame {
         gasButton.addActionListener(e -> {
             carC.gas(gasAmount);
         });
-        /*
+
         brakeButton.addActionListener(e -> {
-            carC.brake();
-        });  */
+            carC.brake(brakeAmount);
+        });
 
         // Make the panel layout more compact
         this.pack();
